@@ -1,5 +1,6 @@
 /* Search block CSS */
 
+
 .hidden{display:none;}
 .search-wrap div,.search-wrap input,.search-wrap span,.search-wrap ul,.search-wrap li,.search-wrap form,.search-wrap label {margin:0px;padding:0px;border:0px;font-size:100%;font:inherit;vertical-align:baseline;}
 .search{float:right;display:inline;zoom:1;}
