@@ -5,11 +5,10 @@ Its not an actual Drupal module.
 There are three files.
 
  - search_block.css - The CSS for the block.  This needs to be added to your theme's local.css file or some other method
- - search_block_essp.html - The HTML to be entered into the block.  This is copied into a Drupal block - I used PHP format.  Yes, I know its bad.
+ - search_block_essp.html - The HTML to be entered into the block.  This is copied into a Drupal block - I used PHP format.  Yes, I know this is very bad.
  	- You will need to change the path on the last line "/sites/all/themes/essp_pixture/js/search_box.js " to where you want to store the .js file.
  - search_box.js - The Javascript file that does the searching.  Find it a nice home in your theme, remember to fix the path above.
 
-This is entirely not the correct way to do this, but it works and was a quick fix
-on a Saturday morning.
+This is entirely not the correct way to do this, but it works and was a quick fix on a Saturday morning.
 
 Improvements and/or modulization would be welcome additions.
