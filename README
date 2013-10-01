@@ -1,0 +1,14 @@
+This is an example of setting up a PSU search block for Drupal 7.
+
+Its not an actual Drupal module.
+
+There are three files.
+
+ - search_block.css - The CSS for the block.
+ - search_block_essp.html - The HTML to be entered into the block.
+ - search_box.js - The Javascript file that does the searching.
+
+This is entirely not the correct way to do this, but it works and was a quick fix
+on a Saturday morning.
+
+
