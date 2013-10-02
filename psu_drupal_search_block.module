@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * @file
+ * Shows Penn State Search block for Drupal
+ */
+
+
+/**
+ * Implements hook_block_info().
+ */
+function psu_drupal_search_block_block_info() {
+  $blocks['psu_drupal_search_block'] = array(
+    'info' => t('Penn State Search block'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_configure().
+ */
+function psu_drupal_search_block_block_configure($delta = '') {
+
+
+}
+
+/**
+ * Implements hook_block_save().
+ */
+function psu_drupal_search_block_block_save($delta = '', $edit = array()) {
+
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function psu_drupal_search_block_block_view($delta = '') {
+
+}
