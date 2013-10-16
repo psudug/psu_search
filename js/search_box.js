@@ -1,5 +1,5 @@
-			(function($) {
-				/** the element*/
+jQuery( document ).ready(function( $ ) {
+  				/** the element*/
 				var $ui = $('#ui_element');
 				/**on focus and on click display the dropdown*/
 				$ui.find('.sb_input').bind('focus click', function($) {
@@ -12,9 +12,27 @@
                         $('#search').focus(function($) {
                                 //$('#search').val("");
                                 //$('.sb_wrapper').css("display", "block");
-				});			
+				});	
+});
 
-			}(jQuery));
+// 			(function($) {
+// 				/** the element*/
+// 				var $ui = $('#ui_element');
+// 				/**on focus and on click display the dropdown*/
+// 				$ui.find('.sb_input').bind('focus click', function($) {
+// 					console.log('CLICK');
+// 					$ui.find('.sb_dropdown').show();
+// 				});
+// 				/**on mouse leave hide the dropdown*/
+// 				$ui.bind('mouseleave', function($) {
+// 					$ui.find('.sb_dropdown').hide();
+// 				});
+//                         $('#search').focus(function($) {
+//                                 //$('#search').val("");
+//                                 //$('.sb_wrapper').css("display", "block");
+// 				});			
+// 
+// 			}(jQuery));
 
 
 			function multiPSUsearch() {

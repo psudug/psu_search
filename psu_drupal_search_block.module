@@ -6,6 +6,11 @@
  */
 
 
+function psu_drupal_search_block_init() {
+	drupal_add_js( drupal_get_path( 'module', 'psu_drupal_search_block') . '/js/search_box.js' );
+	drupal_add_css( drupal_get_path( 'module', 'psu_drupal_search_block') . '/css/search_block.css' );
+}
+
 /**
  * Implements hook_block_info().
  */
@@ -17,6 +22,11 @@ function psu_drupal_search_block_block_info() {
   
   return $blocks;
 }
+
+/**
+ * Implements hook_enable() called when the module is enabled.
+ */
+function psu_drupal_search_block_enable() { }
 
 /**
  * Implements hook_block_configure().
@@ -37,5 +47,19 @@ function psu_drupal_search_block_block_save($delta = '', $edit = array()) {
  * Implements hook_block_view().
  */
 function psu_drupal_search_block_block_view($delta = '') {
-
+  switch ($delta) {
+    case 'psu_drupal_search_block':
+      if (user_access('access content')) {
+		$file_path = getcwd() . '/' . drupal_get_path('module', 'psu_drupal_search_block') . '/search_block.html';
+		$code = file_get_contents( $file_path );
+	
+		// Disable the title of the block
+		$block['subject'] = '<none>';
+	
+		// Paste in content from HTML file
+		$block['content'] = $code;
+      }
+    }
+    
+  return $block;
 }
