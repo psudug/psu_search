@@ -4,6 +4,14 @@
  * @file
  * Shows Penn State Search block for Drupal
  */
+ 
+global $DEFAULT_ENGINES;
+$DEFAULT_ENGINES = array( 
+      	'psu' => 'Penn State',
+      	'people' => 'People',
+      	'departments' => 'Departments',
+      	'this_site' => 'This Site'
+      	);
 
 /**
  * Implements hook_init() called when any page is loaded.
@@ -12,6 +20,15 @@
 function psu_drupal_search_block_init() {
 	drupal_add_js( drupal_get_path( 'module', 'psu_drupal_search_block') . '/js/search_box.js' );
 	drupal_add_css( drupal_get_path( 'module', 'psu_drupal_search_block') . '/css/search_block.css' );
+	
+	// Expose settings array to Javascript
+    drupal_add_js(array(
+      'psu_drupal_search_block' => array(
+        'show' => variable_get('psu_sb_settings_show',  $GLOBALS['DEFAULT_ENGINES']),
+        'default_engine' => variable_get('psu_sb_settings_default', 'this_site'),
+        'placeholder' => variable_get('psu_sb_settings_placeholder', 'Search')
+      )
+    ), 'setting');
 }
 
 /**
@@ -35,7 +52,31 @@ function psu_drupal_search_block_enable() { }
  * Implements hook_block_configure().
  */
 function psu_drupal_search_block_block_configure($delta = '') {
-
+  $form = array();
+  if ($delta == 'psu_drupal_search_block') {
+    $form['psu_sb_settings_placeholder'] = array(
+    	'#type' => 'textfield',
+    	'#title' => 'Placeholder Text',
+    	'#default_value' => variable_get('psu_sb_settings_placeholder', 'Search'),
+    	'#description' => t('Set the default placeholder text for the search box.')
+    );
+    $form['psu_sb_settings_show'] = array(
+      '#type' => 'checkboxes',
+      '#title' => t('Search Engines to Display'),
+      '#default_value' => variable_get('psu_sb_settings_show', array_keys($GLOBALS['DEFAULT_ENGINES'])),
+      '#options' => $GLOBALS['DEFAULT_ENGINES'],
+      '#description' => t('Choose which search engines to display in the dropdown.')
+    );
+    $form['psu_sb_settings_default'] = array(
+    	'#type' => 'select',
+    	'#title' => t('Engine selected by default'),
+        '#default_value' => variable_get('psu_sb_settings_default', 'this_site'),
+        '#options' => $GLOBALS['DEFAULT_ENGINES'],
+        '#description' => t('Be sure the selected default is displayed above as well.'),
+    );  	
+  }
+  
+  return $form;
 
 }
 
@@ -43,7 +84,12 @@ function psu_drupal_search_block_block_configure($delta = '') {
  * Implements hook_block_save().
  */
 function psu_drupal_search_block_block_save($delta = '', $edit = array()) {
-
+  // This example comes from node.module.
+  if ($delta == 'psu_drupal_search_block') {
+    variable_set('psu_sb_settings_show', $edit['psu_sb_settings_show']);
+    variable_set('psu_sb_settings_default', $edit['psu_sb_settings_default']);
+    variable_set('psu_sb_settings_placeholder', $edit['psu_sb_settings_placeholder']);
+  }
 }
 
 /**

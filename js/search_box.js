@@ -10,10 +10,21 @@ jQuery( document ).ready(function( $ ) {
 				$ui.bind('mouseleave', function($) {
 					$ui.find('.sb_dropdown').hide();
 				});
-                        $('#search').focus(function($) {
-                                //$('#search').val("");
-                                //$('.sb_wrapper').css("display", "block");
-				});	
+				
+				/* Hide engines that were not enabled via the settings in the Drupal 
+				 * block configure.
+				 */
+				var psu_show = Drupal.settings.psu_drupal_search_block.show;
+				for (engine in psu_show) {
+					if (psu_show[engine]==0)
+						$('#engine-'+engine).hide();
+				}
+				
+				// Select default search engine.
+				$('input#'+Drupal.settings.psu_drupal_search_block.default_engine).attr("checked","checked");
+				
+				//Set Search box placeholder text.
+				$('#ui_element input#search').attr('placeholder', Drupal.settings.psu_drupal_search_block.placeholder);
 });
 
 function multiPSUsearch() {
