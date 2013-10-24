@@ -115,6 +115,9 @@ function psu_drupal_search_block_block_view($delta = '') {
   }
 }
 
+/**
+ * Implements hook_theme().
+ */
 function psu_drupal_search_block_theme() {
   return array(
     'search_block_content' => array(
