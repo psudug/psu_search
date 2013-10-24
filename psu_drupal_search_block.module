@@ -96,20 +96,22 @@ function psu_drupal_search_block_block_save($delta = '', $edit = array()) {
  * Implements hook_block_view().
  */
 function psu_drupal_search_block_block_view($delta = '') {
-  switch ($delta) {
+  switch($delta){
     case 'psu_drupal_search_block':
-      if (user_access('access content')) {
-      	// Load the HTML code for the PSU Search form directly from an extermal html file.
-		$file_path = getcwd() . '/' . drupal_get_path('module', 'psu_drupal_search_block') . '/search_block.html';
-		$code = file_get_contents( $file_path );
-	
-		// Disable the title of the block
-		$block['subject'] = '<none>';
-	
-		// Paste in content from HTML file
-		$block['content'] = $code;
+      if(user_access('access content')) { //good idea to check user perms here
+         $block['subject'] = t('Search');
+         $block['content'] = theme('search_block_content');
+         return $block;
       }
-    }
-    
-  return $block;
+    break;
+  }
+}
+
+function psu_drupal_search_block_theme() {
+  return array(
+    'search_block_content' => array(
+      'template' => 'search-block',
+      'variables' => array('items' => NULL,),
+    ),   
+  ); 
 }
