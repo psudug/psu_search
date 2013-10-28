@@ -25,6 +25,7 @@ jQuery( document ).ready(function( $ ) {
 				
 				//Set Search box placeholder text.
 				$('#ui_element input#search').attr('placeholder', Drupal.settings.psu_drupal_search_block.placeholder);
+				
 });
 
 function multiPSUsearch() {
@@ -58,7 +59,7 @@ function multiPSUsearch() {
 				break;
 			case 3:
 				thissite.keys.value = v;
-				thissite.action = "/search/node";
+				thissite.action = Drupal.settings.psu_drupal_search_block.this_site_url;
 				thissite.submit();
 				break;
 			default:
