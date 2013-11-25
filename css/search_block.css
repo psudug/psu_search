@@ -42,7 +42,7 @@
 	outline:none;
 	width:205px;
 	float:left;
-	margin:3px 0;
+	margin:3px 0 0 5px;
 }
 
 ul.sb_dropdown
@@ -90,10 +90,10 @@ ul.sb_dropdown li input[type=radio]
 
 input.sb_search
 {
-	background:#fff url(/search-icon.jpg) no-repeat center center;
+	background:#fff url(search-icon-small.png) no-repeat center center;
 	height:24px;
 	width:38px;
-	float:left;
+	float:right;
 	border:none;
 	outline:none;
 	cursor:pointer;

@@ -1,21 +1,21 @@
 <div class="search-wrap">
 <div class="search">
 <form name="searchengine" id="ui_element" class="sb_wrapper" method="post" action="javascript:multiPSUsearch()" >
-<p><label for="search" class="hidden">Search:</label><input title="Enter the terms you wish to search for." placeholder="search" id="search" name="search" class="sb_input" type="text"/><input id="searchButton" class="sb_search" onclick="javascript:multiPSUsearch()" type="submit" value=""/></p>
+<p><label for="search" class="hidden">Search:</label><input title="Enter the terms you wish to search for." placeholder="Search" id="search" name="search" class="sb_input" type="text"/><input id="searchButton" class="sb_search" onclick="javascript:multiPSUsearch()" type="submit" value=""/></p>
 <ul class="sb_dropdown" style="display:none;">
-     <li>
-          <input id="psu" type="radio" name="engine" value="0"   >
-          <label for="psu" >Penn State</label>
-     </li>
-								<li>
+							 <li id="engine-psu">
+								  <input id="psu" type="radio" name="engine" value="0"   >
+								  <label for="psu" >Penn State</label>
+							 </li>
+								<li id="engine-people">
 									<input id="people" type="radio" name="engine" value="1" >
 									<label for="people">People</label>
 								</li>
-								<li>
+								<li id="engine-departments">
 									<input id="departments" type="radio" name="engine" value="2" >
 									<label for="departments">Departments</label>
 								</li>
-								<li>
+								<li id="engine-this_site">
 									<input id="this_site" type="radio" name="engine" value="3" checked>
 									<label for="this_site">This Site</label>
 								</li>
@@ -55,4 +55,3 @@
  				<input type="hidden" id="keys" name="keys" />
 			</form>
 		</div>	
-<script type="text/javascript" src="/sites/all/themes/essp_pixture/js/search_box.js"></script>
