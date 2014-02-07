@@ -1,6 +1,8 @@
 <div class="search-wrap">
 <div class="search">
 <form name="searchengine" id="ui_element" class="sb_wrapper" method="post" action="javascript:multiPSUsearch()" >
+<fieldset>
+<legend>Search</legend>
 <p><label for="search" class="hidden">Search:</label><input title="Enter the terms you wish to search for." placeholder="Search" id="search" name="search" class="sb_input" type="text"/><input id="searchButton" class="sb_search" onclick="javascript:multiPSUsearch()" type="submit" value=""/></p>
 <ul class="sb_dropdown" style="display:none;">
 							 <li id="engine-psu">
@@ -20,6 +22,7 @@
 									<label for="this_site">This Site</label>
 								</li>
 							</ul>
+						 </fieldset>
 						</form>
 					</div>
 					<noscript>

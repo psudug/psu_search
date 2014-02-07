@@ -146,3 +146,15 @@ input[type=text],input[type=submit]
 	-webkit-appearance:none;
 	border-radius:0;
 }
+div.search fieldset
+{
+        margin: 0;
+        padding: 0;
+}
+
+div.search fieldset legend
+{
+        display: none !important;
+        margin: 0;
+        padding: 0;
+}
