@@ -1,16 +1,12 @@
-This is an example of setting up a PSU search block for Drupal 7.
+PSU Search 7.20-dev
 
-Its not an actual Drupal module. Yet.
+This is a forked version of the original implimentation which used a template
+file to render the form and javascript to control the functionality.
 
-There are three files.
+This version utilizes the Form API to display render the form and control
+the functionality.
 
- - search_block.css - The CSS for the block.  This needs to be added to your theme's local.css file or some other method
- - search_block_essp.html - The HTML to be entered into the block.  This is copied into a Drupal block - I used PHP format.  Yes, I know this is very bad.
- 	- You will need to change the path on the last line "/sites/all/themes/essp_pixture/js/search_box.js " to where you want to store the .js file.
- - search_box.js - The Javascript file that does the searching.  Find it a nice home in your theme, remember to fix the path above.
-
-This is entirely not the correct way to do this, but it works and was a quick fix on a Saturday morning.
-
-Improvements and/or modulization would be welcome additions.
-
-Setting up a dev branch for Drupal modularization.
+ToDo:
+- Responsive CSS à la the http://www.psu.edu search block
+- Properly define the global variables in the module.
+- Check for accessiblity
