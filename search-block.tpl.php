@@ -1,55 +1,15 @@
-<div class="search-wrap">
- <div class="search">
-    <form name="searchengine" id="ui_element" class="sb_wrapper" method="post" action="javascript:multiPSUsearch()" >
-	<fieldset>
-	<legend>Search</legend>
-	<p><label for="search" class="hidden">Search:</label>
-	<input title="Enter the terms you wish to search for." placeholder="Search" id="search" name="search" class="sb_input" type="text"/>
-	<input id="searchButton" class="sb_search" onclick="javascript:multiPSUsearch()" type="submit" value=""/></p>
-		<ul class="sb_dropdown" style="display:none;">
-			<li id="engine-psu">
-				<input id="psu" type="radio" name="engine" value="0"   >
-				<label for="psu">Penn State</label>
-			</li>
-			<li id="engine-people">
-				<input id="people" type="radio" name="engine" value="1" >
-				<label for="people">People</label>
-			</li>
-			<li id="engine-departments">
-				<input id="departments" type="radio" name="engine" value="2" >
-				<label for="departments">Departments</label>
-			</li>
-			<li id="engine-this_site">
-				<input id="this_site" type="radio" name="engine" value="3" checked>
-				<label for="this_site">This Site</label>
-			</li>
-		</ul>
-	</fieldset>
-    </form>
+<form id="psu-search" name="psu-search-block" action="http://psu.edu/search/gss" method="get" onSubmit="return dosearch();">
+  <label class="subtle">Search Options:</label>
+  <input class="psu-search__engine" type="radio" name="engine" id="engine_gss" checked value="http://psu.edu/search/gss/">
+    <label for="engine_gss">Penn State</label>
+  <input class="psu-search__engine" type="radio" name="engine" id="engine_people" value="http://psu.edu/search/people/">
+    <label for="engine_people">People</label>
+  <input class="psu-search__engine" type="radio" name="engine" id="engine_department" value="http://psu.edu/search/department/">
+    <label class="last-engine"for="engine_department">Department</label>
+
+  <div class="psu-search__keywords">
+    <label class="subtle" for="query">Search Text:</label>
+    <input class="psu-search__input" type="text" name="query" placeholder="<?php print $placeholder; ?>">
+    <input class="psu-search__submit" type="submit" name="search" value="Search">
   </div>
-  <noscript>
-	<div class="njsearch">
-	<ul id="searchForm_nj">
-	<li>Search:</li>
-	<li><a href="http://search.psu.edu">Penn State</a></li>
-	<li><a href="http://search.psu.edu/ldap/">People</a></li>
-	<li><a href="http://search.psu.edu/ph/department/">Departments</a></li>
-	<li><a href="/search">This Site</a></li>
-	</ul>
-	</div>
-  </noscript>
-</div>
-<div style="display: none;">
-	<form name="psupeople" id="psupeople" method="post" action="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi" >
-		<input type="hidden" name="cn" id="cn"/>
-		<input type="submit" class="sb_search" value=""/>
-	</form>
-	<form name="psudepts" id="psudepts" method="post" action="http://www.psu.edu/cgi-bin/ldap/dept_query.cgi">
-		<input type="hidden" name="dept_name" id="dept_name" />
-                <input type="submit" class="sb_search" value=""/>
-	</form>
-	<form action="/search/node" method="post" id="thissite" name="thissite">
- 		<input type="hidden" id="keys" name="keys" />
-                <input type="submit" class="sb_search" value=""/>
-	</form>
-</div>	
+</form>
