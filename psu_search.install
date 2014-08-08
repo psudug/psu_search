@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * Implements hook_enable().
+ */
+function psu_search_enable() {
+  variable_set('psu_search_settings_placeholder', 'search/node');
+  variable_set('psu_search_settings_show', $GLOBALS['DEFAULT_ENGINES']);
+  variable_set('psu_search_settings_thissiteurl', 'search/node');
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function psu_search_uninstall() {
+  variable_del('psu_search_settings_placeholder');
+  variable_del('psu_search_settings_show');
+  variable_del('psu_search_settings_thissiteurl');
+}

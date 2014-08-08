@@ -7,10 +7,10 @@
 
 global $DEFAULT_ENGINES;
 $DEFAULT_ENGINES = array(
-  'This Site' => 'This Site',
-  'Penn State' => 'Penn State',
-  'People' => 'People',
-  'Departments' => 'Departments'
+  'this_site' => 'This Site',
+  'penn_state' => 'Penn State',
+  'people' => 'People',
+  'departments' => 'Departments'
 );
 
 /**
@@ -53,13 +53,6 @@ function psu_search_block_configure($delta = '') {
       '#options' => $GLOBALS['DEFAULT_ENGINES'],
       '#description' => t('Choose which search engines to display in the dropdown.')
     );
-    $form['psu_search_settings_default'] = array(
-      '#type' => 'select',
-      '#title' => t('Engine selected by default'),
-        '#default_value' => variable_get('psu_search_settings_default', 'this_site'),
-        '#options' => $GLOBALS['DEFAULT_ENGINES'],
-        '#description' => t('Be sure the selected default is displayed above as well.'),
-    );
     $form['psu_search_settings_thissiteurl'] = array(
       '#type' => 'textfield',
       '#title' => 'This Site Engine URL',
@@ -80,7 +73,6 @@ function psu_search_block_configure($delta = '') {
 function psu_search_block_save($delta = '', $edit = array()) {
   if ($delta == 'psu_search') {
     variable_set('psu_search_settings_show', $edit['psu_search_settings_show']);
-    variable_set('psu_search_settings_default', $edit['psu_search_settings_default']);
     variable_set('psu_search_settings_placeholder', $edit['psu_search_settings_placeholder']);
     variable_set('psu_search_settings_thissiteurl', $edit['psu_search_settings_thissiteurl']);
   }
@@ -93,13 +85,13 @@ function psu_search_block_view($delta = '') {
   switch($delta){
     case 'psu_search':
       $block['subject'] = t('Search');
-      $block['content'] = drupal_get_form('psu_drupal_search_form');
+      $block['content'] = drupal_get_form('psu_search_form');
       return $block;
     break;
   }
 }
 
-function psu_drupal_search_form($form, &$form_state) {
+function psu_search_form($form, &$form_state) {
   $form['search']['textfield'] = array(
     '#type' => 'textfield',
     '#title' => t('Search'),
@@ -108,8 +100,7 @@ function psu_drupal_search_form($form, &$form_state) {
   $form['search']['options'] = array(
     '#type' => 'radios',
     '#title' => t('Options'),
-    '#options' => array_filter(variable_get('psu_search_settings_show')),
-    '#default_value' => variable_get('psu_search_settings_default'),
+    '#options' => _psu_search_filter_options(variable_get('psu_search_settings_show'), $GLOBALS['DEFAULT_ENGINES']),
   );
 
   $form['search']['submit'] = array(
@@ -119,26 +110,62 @@ function psu_drupal_search_form($form, &$form_state) {
   return $form;
 }
 
-function psu_drupal_search_form_submit($form, &$form_state) {
+function psu_search_form_submit($form, &$form_state) {
   $searchtext = $form_state['values']['textfield'];
   $option = $form_state['values']['options'];
 
   switch ($option) {
-    case 'This Site':
+    case 'this_site':
       $url = variable_get('psu_search_settings_thissiteurl');
       drupal_goto($url . '/' . $searchtext);
       break;
-    case 'Penn State':
+    case 'penn_state':
       drupal_goto('http://www.psu.edu/search/gss?query=' . $searchtext);
       break;
-    case 'People':
+    case 'people':
       drupal_goto('http://www.psu.edu/search/people/' . $searchtext);
       break;
-    case 'Departments':
+    case 'departments':
       drupal_goto('http://www.psu.edu/search/department/' . $searchtext);
       break;
     default:
       drupal_goto('http://www.psu.edu/search/gss?query=' . $searchtext);
       break;
   }
+}
+
+/**
+ * Helper function to turn a vget options array into a
+ * nice options array with proper key, value pairs.
+ *
+ * @param  [array] $vget_options     Options from the vget function
+ * @param  [array] $original_options The original list from the vset function
+ * @return [array]                   Filtered list with nice key, value pairs
+ */
+function _psu_search_filter_options($vget_options, $original_options) {
+  $options = array();
+  $vget_options = array_filter($vget_options);
+  $options = array_intersect_key($original_options, $vget_options);
+
+  return $options;
+}
+
+/**
+ * Return the first key of an array
+ */
+function _psu_search_get_first_key($array) {
+  reset($array); // make sure array pointer is at first element
+  $firstkey = key($array);
+
+  return $firstkey;
+}
+
+/**
+ * Return the first value of an array
+ */
+function _psu_search_get_first_value($array) {
+  reset($array); // make sure array pointer is at first element
+  $firstvalue = current($array);
+
+  return $firstvalue;
 }
