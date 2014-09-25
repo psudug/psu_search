@@ -1,12 +1,14 @@
 <?php
 
 /**
- * Implements hook_enable().
+ * Implements hook_install().
  */
-function psu_search_enable() {
+function psu_search_install() {
   variable_set('psu_search_settings_placeholder', 'Search');
   variable_set('psu_search_settings_show', $GLOBALS['DEFAULT_ENGINES']);
   variable_set('psu_search_settings_thissiteurl', 'search/node');
+  variable_set('psu_search_settings_css', 0);
+  variable_set('psu_search_settings_js', 0);
 }
 
 /**
@@ -16,4 +18,6 @@ function psu_search_uninstall() {
   variable_del('psu_search_settings_placeholder');
   variable_del('psu_search_settings_show');
   variable_del('psu_search_settings_thissiteurl');
+  variable_del('psu_search_settings_css');
+  variable_del('psu_search_settings_js');
 }

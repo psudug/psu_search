@@ -14,12 +14,16 @@ $DEFAULT_ENGINES = array(
 );
 
 /**
- * Implements hook_init() called when any page is loaded.
+ * Implements hook_page_build.
  * Used to insert required JS and CSS files for Search into the page's head.
  */
-function psu_search_init() {
-	drupal_add_js( drupal_get_path( 'module', 'psu_search') . '/js/search_box.js' );
-	drupal_add_css( drupal_get_path( 'module', 'psu_search') . '/css/search_block.css' );
+function psu_search_page_build() {
+  if (variable_get('psu_search_settings_css') == 1) {
+    drupal_add_css( drupal_get_path( 'module', 'psu_search') . '/css/search_block.css' );
+  }
+  if (variable_get('psu_search_settings_js') == 1) {
+    drupal_add_js( drupal_get_path( 'module', 'psu_search') . '/js/search_box.js' );
+  }
 }
 
 /**
@@ -42,7 +46,7 @@ function psu_search_block_configure($delta = '') {
   if ($delta == 'psu_search') {
     $form['psu_search_settings_placeholder'] = array(
       '#type' => 'textfield',
-      '#title' => 'Placeholder Text',
+      '#title' => t('Placeholder Text'),
       '#default_value' => variable_get('psu_search_settings_placeholder'),
       '#description' => t('Set the default placeholder text for the search box.')
     );
@@ -55,14 +59,24 @@ function psu_search_block_configure($delta = '') {
     );
     $form['psu_search_settings_thissiteurl'] = array(
       '#type' => 'textfield',
-      '#title' => 'This Site Engine URL',
+      '#title' => t('This Site Engine URL'),
       '#default_value' => variable_get('psu_search_settings_thissiteurl'),
       '#description' => t('Set a custom URL for the action of the This Site search engine.')
     );
+    $form['psu_search_settings_css'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Default Styling'),
+      '#default_value' => variable_get('psu_search_settings_css'),
+      '#description' => t('Enable default styling for Penn State branding.')
+    );
+    $form['psu_search_settings_js'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Default Interaction'),
+      '#default_value' => variable_get('psu_search_settings_js'),
+      '#description' => t('Enable default javascript for show and hiding events.')
+    );
   }
-
   return $form;
-
 }
 
 /**
@@ -75,6 +89,8 @@ function psu_search_block_save($delta = '', $edit = array()) {
     variable_set('psu_search_settings_show', $edit['psu_search_settings_show']);
     variable_set('psu_search_settings_placeholder', $edit['psu_search_settings_placeholder']);
     variable_set('psu_search_settings_thissiteurl', $edit['psu_search_settings_thissiteurl']);
+    variable_set('psu_search_settings_css', $edit['psu_search_settings_css']);
+    variable_set('psu_search_settings_js', $edit['psu_search_settings_js']);
   }
 }
 
