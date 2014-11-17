@@ -37,7 +37,7 @@
   height: 15px;
   margin: 0;
 }
-@media (min-width: 40em) {
+@media (min-width: 50em) {
   #block-psu-search-psu-search {
     background: #BBCCFC;
     padding: 0;
