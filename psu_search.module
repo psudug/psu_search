@@ -111,6 +111,7 @@ function psu_search_form($form, &$form_state) {
   $form['search']['textfield'] = array(
     '#type' => 'textfield',
     '#title' => t('Search'),
+    '#attributes' => array('placeholder' => variable_get('psu_search_settings_placeholder', NULL)),
   );
 
   $form['search']['options'] = array(
