@@ -1,9 +1,15 @@
 jQuery(document).ready(function($) {
-	$('#block-psu-search-psu-search').focusin(function() {
+	var form = $('#block-psu-search-psu-search');
+
+  $(form).focusin(function() {
 		$(this).addClass('expanded');
 	});
 
-	$('#block-psu-search-psu-search').focusout(function() {
-		$(this).removeClass('expanded');
-	});
+  $(form).click(function(event) {
+    event.stopPropagation();
+  });
+
+	$(document).click(function() {
+    $(form).removeClass('expanded');
+  });
 });
