@@ -1,0 +1,189 @@
+<?php
+
+/**
+ * @file
+ * Shows Penn State Search block for Drupal
+ */
+
+global $DEFAULT_ENGINES;
+$DEFAULT_ENGINES = array(
+  'this_site' => 'This Site',
+  'penn_state' => 'Penn State',
+  'people' => 'People',
+  'departments' => 'Departments'
+);
+
+/**
+ * Implements hook_page_build.
+ * Used to insert required JS and CSS files for Search into the page's head.
+ */
+function psu_search_page_build() {
+  if (variable_get('psu_search_settings_css') == 1) {
+    drupal_add_css( drupal_get_path( 'module', 'psu_search') . '/css/search_block.css' );
+  }
+  if (variable_get('psu_search_settings_js') == 1) {
+    drupal_add_js( drupal_get_path( 'module', 'psu_search') . '/js/search_box.js' );
+  }
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function psu_search_block_info() {
+  $blocks['psu_search'] = array(
+    'info' => t('Penn State Search block'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_configure().
+ */
+function psu_search_block_configure($delta = '') {
+  $form = array();
+  if ($delta == 'psu_search') {
+    $form['psu_search_settings_placeholder'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Placeholder Text'),
+      '#default_value' => variable_get('psu_search_settings_placeholder'),
+      '#description' => t('Set the default placeholder text for the search box.')
+    );
+    $form['psu_search_settings_show'] = array(
+      '#type' => 'checkboxes',
+      '#title' => t('Search Engines to Display'),
+      '#default_value' => variable_get('psu_search_settings_show'),
+      '#options' => $GLOBALS['DEFAULT_ENGINES'],
+      '#description' => t('Choose which search engines to display in the dropdown.')
+    );
+    $form['psu_search_settings_thissiteurl'] = array(
+      '#type' => 'textfield',
+      '#title' => t('This Site Engine URL'),
+      '#default_value' => variable_get('psu_search_settings_thissiteurl'),
+      '#description' => t('Set a custom URL for the action of the This Site search engine.')
+    );
+    $form['psu_search_settings_css'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Default Styling'),
+      '#default_value' => variable_get('psu_search_settings_css'),
+      '#description' => t('Enable default styling for Penn State branding.')
+    );
+    $form['psu_search_settings_js'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Default Interaction'),
+      '#default_value' => variable_get('psu_search_settings_js'),
+      '#description' => t('Enable default javascript for show and hiding events.')
+    );
+  }
+  return $form;
+}
+
+/**
+ * Implements hook_block_save().
+ *
+ * Save the variable sets
+ */
+function psu_search_block_save($delta = '', $edit = array()) {
+  if ($delta == 'psu_search') {
+    variable_set('psu_search_settings_show', $edit['psu_search_settings_show']);
+    variable_set('psu_search_settings_placeholder', $edit['psu_search_settings_placeholder']);
+    variable_set('psu_search_settings_thissiteurl', $edit['psu_search_settings_thissiteurl']);
+    variable_set('psu_search_settings_css', $edit['psu_search_settings_css']);
+    variable_set('psu_search_settings_js', $edit['psu_search_settings_js']);
+  }
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function psu_search_block_view($delta = '') {
+  switch($delta){
+    case 'psu_search':
+      $block['subject'] = t('Search');
+      $block['content'] = drupal_get_form('psu_search_form');
+      return $block;
+    break;
+  }
+}
+
+function psu_search_form($form, &$form_state) {
+  $form['search']['textfield'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Search'),
+    '#attributes' => array('placeholder' => variable_get('psu_search_settings_placeholder', NULL)),
+  );
+
+  $form['search']['options'] = array(
+    '#type' => 'radios',
+    '#title' => t('Options'),
+    '#options' => _psu_search_filter_options(variable_get('psu_search_settings_show'), $GLOBALS['DEFAULT_ENGINES']),
+    '#default_value' => _psu_search_get_first_value(variable_get('psu_search_settings_show')),
+  );
+
+  $form['search']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Submit')
+  );
+  return $form;
+}
+
+function psu_search_form_submit($form, &$form_state) {
+  $searchtext = $form_state['values']['textfield'];
+  $option = $form_state['values']['options'];
+
+  switch ($option) {
+    case 'this_site':
+      $url = variable_get('psu_search_settings_thissiteurl');
+      drupal_goto($url . '/' . $searchtext);
+      break;
+    case 'penn_state':
+      drupal_goto('http://www.psu.edu/search/gss?query=' . $searchtext);
+      break;
+    case 'people':
+      drupal_goto('http://www.psu.edu/search/people/' . $searchtext);
+      break;
+    case 'departments':
+      drupal_goto('http://www.psu.edu/search/department/' . $searchtext);
+      break;
+    default:
+      drupal_goto('http://www.psu.edu/search/gss?query=' . $searchtext);
+      break;
+  }
+}
+
+/**
+ * Helper function to turn a vget options array into a
+ * nice options array with proper key, value pairs.
+ *
+ * @param  [array] $vget_options     Options from the vget function
+ * @param  [array] $original_options The original list from the vset function
+ * @return [array]                   Filtered list with nice key, value pairs
+ */
+function _psu_search_filter_options($vget_options, $original_options) {
+  $options = array();
+  $vget_options = array_filter($vget_options);
+  $options = array_intersect_key($original_options, $vget_options);
+
+  return $options;
+}
+
+/**
+ * Return the first key of an array
+ */
+function _psu_search_get_first_key($array) {
+  reset($array); // make sure array pointer is at first element
+  $firstkey = key($array);
+
+  return $firstkey;
+}
+
+/**
+ * Return the first value of an array
+ */
+function _psu_search_get_first_value($array) {
+  reset($array); // make sure array pointer is at first element
+  $firstvalue = current($array);
+
+  return $firstvalue;
+}

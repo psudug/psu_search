@@ -1,3 +1,4 @@
-name = PSU Drupal 7 Search block
+name = PSU Search block
 description = Adds the Penn State search block.
 core = 7.x
+package = PSU
