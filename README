@@ -7,9 +7,3 @@ file to render the form and javascript to control the functionality.
 
 This version utilizes the Form API to display render the form and control
 the functionality.
-
-ToDo:
-- Responsive CSS à la the http://www.psu.edu search block.
-- Properly define the global variables in the module.
-- Check for accessiblity.
-- Add CSS/JS toggle in block configuration.
