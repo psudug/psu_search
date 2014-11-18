@@ -1,5 +1,7 @@
 PSU Search 7.20-dev
 
+The project has also been renamed to psu_search .
+
 This is a forked version of the original implimentation which used a template
 file to render the form and javascript to control the functionality.
 
