@@ -1,31 +1,33 @@
-#block-psu-search-psu-search {
-  background: #CECDCD;
-  padding: 1em;
+#psu-search-form {
+  padding: 0;
+  position: relative;
+  margin-left: 2em;
+  display: block;
+  overflow: hidden;
+  max-width: 250px;
 }
 
-#block-psu-search-psu-search .block__title,
-#block-psu-search-psu-search label[for="edit-textfield"],
-#block-psu-search-psu-search label[for="edit-options"] {
+#psu-search-form .block__title,
+#psu-search-form label[for="edit-textfield"],
+#psu-search-form label[for="edit-options"] {
   position: absolute !important;
   clip: rect(1px 1px 1px 1px);
   /* IE6, IE7 */
   clip: rect(1px, 1px, 1px, 1px);
 }
-#block-psu-search-psu-search #edit-textfield {
+#psu-search-form #edit-textfield {
   border: none;
 }
-#block-psu-search-psu-search .form-type-radios .option {
-  font-size: .8em;
-}
-#block-psu-search-psu-search input[type="text"] {
+#psu-search-form input[type="text"] {
+  background-color: white;
   width: 100%;
   padding: .5em;
   padding-right: 2em;
 }
-#block-psu-search-psu-search input[type="submit"] {
+#psu-search-form input[type="submit"] {
   position: absolute;
-  right: 18px;
-  top: 21px;
+  right: 0;
+  top: 7px;
   border: none;
   background: url("search-icon-small.png") no-repeat center center;
   text-indent: 100%;
@@ -37,27 +39,27 @@
   height: 15px;
   margin: 0;
 }
-@media (min-width: 50em) {
-  #block-psu-search-psu-search {
-    background: #BBCCFC;
-    padding: 0;
-    max-width: 20em;
-  }
-  #block-psu-search-psu-search .form-type-textfield {
-    margin: 0;
-  }
-  #block-psu-search-psu-search .psu-search-form {
-    position: relative;
-  }
-  #block-psu-search-psu-search .form-type-radios {
-    padding: .3em .5em;
-    margin: 0;
-  }
-  #block-psu-search-psu-search .form-item-options {
-    display: inline-block;
-    margin-right: .5em;
-  }
-  #block-psu-search-psu-search input[type="submit"] {
-    top: 9px;
-  }
+#psu-search-form .form-type-textfield {
+  margin: 0;
 }
+#psu-search-form .psu-search-form {
+  position: relative;
+}
+#psu-search-form .form-type-radios {
+  background: #BBCCFC;
+  display: block;
+  overflow: hidden;
+  position: relative;
+  padding: .5em;
+  margin-top: -2px;
+}
+#psu-search-form .form-type-radio {
+  display: block;
+  float: left;
+  color: black;
+}
+#psu-search-form .form-type-radio .option {
+  margin-right: 1em;
+  margin-left: 0;
+}
+
